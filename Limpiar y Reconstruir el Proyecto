@@ -1,0 +1,17 @@
+1) Abrir una Terminal o Línea de Comandos:
+
+Abre tu terminal o línea de comandos. Esto puede ser Git Bash, Command Prompt, PowerShell, o cualquier terminal que prefieras.
+2) Navegar al Directorio del Proyecto:
+
+Usa el comando cd para moverte al directorio raíz de tu proyecto Spring Boot. Por ejemplo:
+cd /ruta/a/tu/proyecto
+3) Limpiar el Proyecto:
+
+Ejecuta el comando mvn clean para limpiar el proyecto. Esto eliminará todos los archivos generados previamente, como los archivos de la carpeta target.
+
+mvn clean
+4) Reconstruir el Proyecto:
+
+Después de limpiar el proyecto, ejecuta mvn install para reconstruirlo. Este comando compilará el código, ejecutará las pruebas y empaquetará el proyecto en un archivo jar o war.
+
+mvn install
