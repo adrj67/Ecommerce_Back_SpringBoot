@@ -69,15 +69,10 @@ public class ProductoController {
         productoService.update(producto);
         return "redirect:/productos";
     }
-    /*@GetMapping("/productos/edit/{id}")
-    public String showEditForm(@PathVariable("id") Long id, Model model) {
-    Producto producto = productoService.findById(id);
-    if (producto == null) {
-        // Manejar el caso donde el producto no se encuentra
+    
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id){
+        productoService.delete(id);
         return "redirect:/productos";
     }
-    model.addAttribute("producto", producto);
-    return "productos/edit";
-}*/
-
 }
