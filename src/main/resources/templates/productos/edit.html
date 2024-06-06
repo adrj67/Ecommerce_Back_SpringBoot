@@ -1,24 +1,21 @@
 <!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
 <html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>Spring eCommerce</title>
-
-
-  <!-- Bootstrap core CSS -->
- <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-
-  <!-- Custom styles for this template -->
-  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
-
-</head>
-
-<body>
+    <head>
+        <title>Spring eCommerce</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+         <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Bootstrap core CSS -->
+        <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+    </head>
+    <body>
 
   <!-- Navigation -->
    <div th:include="administrador/template_admin.html::header" ></div>
@@ -97,4 +94,4 @@
 
   </body>
 
-  </html>
+</html>
