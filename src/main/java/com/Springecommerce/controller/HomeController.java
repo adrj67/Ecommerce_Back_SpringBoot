@@ -7,6 +7,8 @@ package com.Springecommerce.controller;
 import com.Springecommerce.model.DetalleOrden;
 import com.Springecommerce.model.Orden;
 import com.Springecommerce.model.Producto;
+import com.Springecommerce.model.Usuario;
+import com.Springecommerce.service.IUsuarioService;
 import com.Springecommerce.service.ProductoService;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,9 @@ public class HomeController {
     
     @Autowired
     private ProductoService productoService;
+    
+    @Autowired
+    private IUsuarioService usuarioService;
     
     // Para almacenar los detalles de la orden
     List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
@@ -79,7 +84,13 @@ public class HomeController {
       detalleOrden.setTotal(producto.getPrecio()*cantidad);
       detalleOrden.setProducto(producto);
       
-      detalles.add(detalleOrden);
+      // Validar que el producto no se añada 2 veces
+      Integer idProducto=producto.getId();
+      boolean ingresado=detalles.stream().anyMatch(p -> p.getProducto().getId()==idProducto);
+      
+      if(!ingresado){
+        detalles.add(detalleOrden);
+      }
       
       sumaTotal=detalles.stream().mapToDouble(dt -> dt.getTotal()).sum();
       
@@ -114,6 +125,25 @@ public class HomeController {
     model.addAttribute("orden", orden);
     
     return "usuario/carrito";
+    }
+    
+    @GetMapping("/getCart")
+    public String getCart(Model model){
+      model.addAttribute("cart", detalles);
+      model.addAttribute("orden", orden);
+      return "/usuario/carrito";
+    }
+    
+    @GetMapping ("/order")
+    public String order(Model model){
+      
+      Usuario usuario = usuarioService.findById(1).get();
+      
+      model.addAttribute("cart", detalles);
+      model.addAttribute("orden", orden);
+      model.addAttribute("usuario", usuario);
+      
+      return "usuario/resumenorden";
     }
     
 }
