@@ -8,8 +8,10 @@ package com.Springecommerce.controller;
 import org.springframework.ui.Model;
 import com.Springecommerce.model.Producto;
 import com.Springecommerce.model.Usuario;
+import com.Springecommerce.service.IUsuarioService;
 import com.Springecommerce.service.ProductoService;
 import com.Springecommerce.service.UploadFileService;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Optional;
 import org.slf4j.*;
@@ -38,6 +40,9 @@ public class ProductoController {
     @Autowired
     private UploadFileService upload;
     
+    @Autowired
+    private IUsuarioService usuarioService;
+    
     @GetMapping("")
     public String show(Model model){
         model.addAttribute("productos", productoService.findAll());
@@ -50,10 +55,10 @@ public class ProductoController {
     }
     
     @PostMapping("/save")
-    public String save(Producto producto, @RequestParam ("img") MultipartFile file) throws IOException{
+    public String save(Producto producto, @RequestParam ("img") MultipartFile file, HttpSession session) throws IOException{
         // Logger muestra por la consola de Netbeans los detalles que va a guardar, sin guardar en la base de datos
         LOGGER.info("Este es el objeto producto {}", producto);
-        Usuario u = new Usuario(1, "", "", "", "", "", "", "");
+        Usuario u = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
         producto.setUsuario(u);
         
         //imagen

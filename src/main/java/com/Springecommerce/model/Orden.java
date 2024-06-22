@@ -19,6 +19,7 @@ import java.util.List;
  *
  * @author adrj
  */
+
 @Entity
 @Table (name = "ordenes")
 public class Orden {

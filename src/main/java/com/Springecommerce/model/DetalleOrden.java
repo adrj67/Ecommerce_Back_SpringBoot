@@ -16,6 +16,7 @@ import jakarta.persistence.Table;
  *
  * @author adrj
  */
+
 @Entity
 @Table (name = "detalles")
 public class DetalleOrden {
