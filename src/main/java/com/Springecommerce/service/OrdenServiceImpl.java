@@ -5,6 +5,7 @@
 package com.Springecommerce.service;
 
 import com.Springecommerce.model.Orden;
+import com.Springecommerce.model.Usuario;
 import com.Springecommerce.repository.IOrdenRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -63,6 +64,11 @@ public class OrdenServiceImpl implements IOrdenService{
     }
     
     return numeroConcatenado;
+  }
+
+  @Override
+  public List<Orden> findByUsuario(Usuario usuario) {
+    return ordenRepository.findByUsuario(usuario);
   }
   
 }

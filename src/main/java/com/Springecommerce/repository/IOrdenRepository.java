@@ -5,6 +5,8 @@
 package com.Springecommerce.repository;
 
 import com.Springecommerce.model.Orden;
+import com.Springecommerce.model.Usuario;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IOrdenRepository extends JpaRepository<Orden, Integer>{
-  
+  List<Orden> findByUsuario(Usuario usuario);
 }

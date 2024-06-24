@@ -5,6 +5,7 @@
 package com.Springecommerce.service;
 
 import com.Springecommerce.model.Orden;
+import com.Springecommerce.model.Usuario;
 import java.util.List;
 
 /**
@@ -18,5 +19,6 @@ public interface IOrdenService {
   List<Orden> findAll();  
   Orden save (Orden orden);
   String generarNumeroOrden();
+  List<Orden> findByUsuario(Usuario usuario);
   
 }

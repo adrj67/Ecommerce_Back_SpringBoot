@@ -4,9 +4,12 @@
  */
 package com.Springecommerce.controller;
 
+import com.Springecommerce.model.Orden;
 import com.Springecommerce.model.Usuario;
+import com.Springecommerce.service.IOrdenService;
 import com.Springecommerce.service.IUsuarioService;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +33,9 @@ public class UsuarioController {
   
   @Autowired
   private IUsuarioService usuarioService;
+  
+  @Autowired
+  private IOrdenService ordenService;
   
   // /usuario/registro
   @GetMapping("/registro")
@@ -74,6 +80,12 @@ public class UsuarioController {
   @GetMapping("/compras")
   public String obtenerCompras(Model model, HttpSession session){
     model.addAttribute("sesion", session.getAttribute("idusuario"));
+    
+    Usuario usuario =  usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
+    List<Orden> ordenes=ordenService.findByUsuario(usuario);
+    
+    model.addAttribute("ordenes", ordenes);
+    
     return "usuario/compras";
   }
 }
