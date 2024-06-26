@@ -5,12 +5,12 @@
 package com.Springecommerce.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 import java.util.List;
@@ -34,7 +34,7 @@ public class Orden {
     @ManyToOne
     private Usuario usuario;
     
-    @OneToMany(mappedBy = "orden")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "orden") // fetch = FetchType.EAGER agregado
 	private List<DetalleOrden> detalle;
 
     public Orden() {
