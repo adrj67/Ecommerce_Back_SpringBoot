@@ -5,6 +5,7 @@
 package com.Springecommerce.controller;
 
 import com.Springecommerce.model.Producto;
+import com.Springecommerce.service.IOrdenService;
 import com.Springecommerce.service.IUsuarioService;
 import com.Springecommerce.service.ProductoService;
 import java.util.List;
@@ -28,6 +29,9 @@ public class AdministradorController {
     @Autowired
     private IUsuarioService usuarioService;
     
+    @Autowired
+    private IOrdenService ordenService;
+    
     @GetMapping("")
     public String home(Model model){
         
@@ -41,5 +45,12 @@ public class AdministradorController {
     public String usuarios(Model model){
       model.addAttribute("usuarios", usuarioService.findAll());
       return "administrador/usuarios";
+    }
+    
+    
+    @GetMapping("/ordenes")
+    public String ordenes(Model model){
+      model.addAttribute("ordenes", ordenService.findAll());
+      return "administrador/ordenes";
     }
 }
