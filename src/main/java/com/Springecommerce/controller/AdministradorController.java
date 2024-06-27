@@ -5,6 +5,7 @@
 package com.Springecommerce.controller;
 
 import com.Springecommerce.model.Producto;
+import com.Springecommerce.service.IUsuarioService;
 import com.Springecommerce.service.ProductoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class AdministradorController {
     @Autowired
     private ProductoService productoService;
     
+    @Autowired
+    private IUsuarioService usuarioService;
+    
     @GetMapping("")
     public String home(Model model){
         
@@ -31,5 +35,11 @@ public class AdministradorController {
         model.addAttribute("productos", productos);
         
         return "administrador/home";
+    }
+    
+    @GetMapping("/usuarios")
+    public String usuarios(Model model){
+      model.addAttribute("usuarios", usuarioService.findAll());
+      return "administrador/usuarios";
     }
 }
