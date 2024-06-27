@@ -4,7 +4,9 @@
  */
 package com.Springecommerce.controller;
 
+import com.Springecommerce.model.Orden;
 import com.Springecommerce.model.Producto;
+import com.Springecommerce.service.IDetalleOrdenService;
 import com.Springecommerce.service.IOrdenService;
 import com.Springecommerce.service.IUsuarioService;
 import com.Springecommerce.service.ProductoService;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -31,6 +34,9 @@ public class AdministradorController {
     
     @Autowired
     private IOrdenService ordenService;
+    
+    @Autowired
+    private IDetalleOrdenService detalleOrdenService;
     
     @GetMapping("")
     public String home(Model model){
@@ -52,5 +58,15 @@ public class AdministradorController {
     public String ordenes(Model model){
       model.addAttribute("ordenes", ordenService.findAll());
       return "administrador/ordenes";
+    }
+    
+    @GetMapping("/detalle/{id}")
+    private String detalle(Model model, @PathVariable Integer id){
+      
+      Orden orden = ordenService.findById(id).get();
+      
+      model.addAttribute("detalles", orden.getDetalle());
+      
+      return "administrador/detalleOrden";
     }
 }
