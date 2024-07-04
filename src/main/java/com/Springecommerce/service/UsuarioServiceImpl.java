@@ -4,10 +4,12 @@
  */
 package com.Springecommerce.service;
 
+
 import com.Springecommerce.model.Usuario;
 import com.Springecommerce.repository.IUsuarioRepository;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
  *
  * @author adrj
  */
+
+
 @Service
 public class UsuarioServiceImpl implements IUsuarioService {
   

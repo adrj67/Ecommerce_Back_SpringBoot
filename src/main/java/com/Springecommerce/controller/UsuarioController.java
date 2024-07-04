@@ -14,6 +14,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +39,8 @@ public class UsuarioController {
   @Autowired
   private IOrdenService ordenService;
   
+  BCryptPasswordEncoder passEncode = new BCryptPasswordEncoder();
+  
   // /usuario/registro
   @GetMapping("/registro")
   public String create(){
@@ -46,9 +49,16 @@ public class UsuarioController {
   
   @PostMapping("/save")
   public String save(Usuario usuario){
-    logger.info("Usuarios registro: {}", usuario);
-    usuario.setTipo("USER");
-    usuarioService.save(usuario);
+    try {
+      
+      logger.info("Usuarios registro: {}", usuario);
+      usuario.setTipo("USER");
+      usuario.setPassword(passEncode.encode(usuario.getPassword()));
+ 
+      usuarioService.save(usuario);
+    } catch (Exception e) {
+      logger.error("Error al guardar el usuario: ", e);
+    }
     return "redirect:/";
   }
   
@@ -62,13 +72,16 @@ public class UsuarioController {
     logger.info("Accesos : {}", usuario);
     
     Optional<Usuario> user= usuarioService.findByEmail(usuario.getEmail());
-    //logger.info("Usuario de bd: {}", user.get());
+    logger.info("Usuario de bd: {}", user.get());
     
-    if(user.isPresent()){
+    if(user.isPresent()){ //if(user.isPresent()){
+      
       session.setAttribute("idusuario", user.get().getId());
       if(user.get().getTipo().equals("ADMIN")){
+        logger.info("Tipo de Usuario: {}", user.get().getTipo());
         return "redirect:/administrador";
       } else {
+        logger.info("Tipo de Usuario: {}", user.get().getTipo());
         return"redirect:/";
       }
     } else {
