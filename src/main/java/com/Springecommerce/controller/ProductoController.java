@@ -32,7 +32,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/productos")
 public class ProductoController {
     
-    private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
+   // private final Logger LOGGER = LoggerFactory.getLogger(ProductoController.class);
     
     @Autowired
     private ProductoService productoService;
@@ -57,7 +57,7 @@ public class ProductoController {
     @PostMapping("/save")
     public String save(Producto producto, @RequestParam ("img") MultipartFile file, HttpSession session) throws IOException{
         // Logger muestra por la consola de Netbeans los detalles que va a guardar, sin guardar en la base de datos
-        LOGGER.info("Este es el objeto producto {}", producto);
+        //LOGGER.info("Este es el objeto producto {}", producto);
         Usuario u = usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString())).get();
         producto.setUsuario(u);
         
@@ -78,7 +78,7 @@ public class ProductoController {
         Optional<Producto> optionalProducto=productoService.get(id);
         producto = optionalProducto.get();
         
-        LOGGER.info("Producto buscado: {}", producto);
+        //LOGGER.info("Producto buscado: {}", producto);
         model.addAttribute("producto", producto);
         return "productos/edit";
     }

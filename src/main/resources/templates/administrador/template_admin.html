@@ -1,3 +1,27 @@
+<!doctype html>
+<html
+    lang="es"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns="http://www.w3.org/1999/xhtml"
+>
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Spring eCommerce</title>
+        <!-- Bootstrap core CSS -->
+        <link
+            th:href="@{vendor/bootstrap/css/bootstrap.min.css}"
+            rel="stylesheet"
+        />
+        <!-- Custom styles for this template -->
+        <link th:href="@{css/heroic-features.css}" rel="stylesheet" />
+    </head>
+
 <!-- Navigation-->
 <div th:fragment="header">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -6,7 +30,7 @@
                 >Spring eCommerce</a
             >
 
-            <form class="form-inline my-2 my-lg-0" method="post" action="#">
+            <form class="form-inline my-2 my-lg-0" method="post" th:action="@{/search}">
                 <input
                     class="form-control mr-sm-2"
                     type="search"
@@ -84,7 +108,7 @@
     <footer class="py-5 bg-dark">
         <div class="container">
             <p class="m-0 text-center text-white">
-                Copyright &copy; Spring eCommerce 2021
+                Copyright &copy; Spring eCommerce 2024
             </p>
         </div>
     </footer>

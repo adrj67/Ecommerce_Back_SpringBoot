@@ -36,7 +36,7 @@
 		</h1>
 
 		<ol class="breadcrumb">
-			<li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+			<li class="breadcrumb-item"><a th:href="@{/administrador}">Home</a></li>
 			<li class="breadcrumb-item active">Ordenes</li>
 		</ol>
 
@@ -48,6 +48,7 @@
 						<table class="table">
 							<thead>
 								<tr>
+									<th scope="col">Id Usuario</th>
 									<th scope="col">No. de Orden</th>
 									<th scope="col">Fecha</th>
 									<th scope="col">Valor</th>
@@ -56,6 +57,7 @@
 							</thead>
 							<tbody>
 								<tr th:each="orden:${ordenes}">
+									<td th:text="${orden.id}"></td>
 									<td th:text="${orden.numero}"></td>
 									<td th:text="${orden.fechaCreacion}"></td>
 									<td th:text="${orden.total}"></td>

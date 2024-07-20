@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +38,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/")
 public class HomeController {
     
-    private final Logger log=LoggerFactory.getLogger(HomeController.class);
+    //private final Logger log=LoggerFactory.getLogger(HomeController.class);
     
     @Autowired
     private ProductoService productoService;
@@ -62,7 +63,7 @@ public class HomeController {
     @GetMapping("")
     public String home(Model model, HttpSession session){
         
-        log.info("Session del usuario: {}", session.getAttribute("idusuario"));
+        //log.info("Session del usuario: {}", session.getAttribute("idusuario"));
         model.addAttribute("productos", productoService.findAll());
         
         //session
@@ -73,7 +74,7 @@ public class HomeController {
     
     @GetMapping("productohome/{id}")
     public String productoHome(@PathVariable Integer id, Model model){
-        log.info("Id producto enviado como parametro {}", id);
+        //log.info("Id producto enviado como parametro {}", id);
         Producto producto = new Producto();
         Optional<Producto> productoOptional = productoService.get(id);
         producto = productoOptional.get();
@@ -90,8 +91,8 @@ public class HomeController {
       double sumaTotal = 0;
       
       Optional<Producto> optionalProducto = productoService.get(id);
-      log.info("Producto añadido: {}", optionalProducto.get());
-      log.info("Cantidad: {}", cantidad);
+      //log.info("Producto añadido: {}", optionalProducto.get());
+      //log.info("Cantidad: {}", cantidad);
       producto = optionalProducto.get();
       
       detalleOrden.setCantidad(cantidad);
@@ -191,12 +192,27 @@ public class HomeController {
       return "redirect:/";
     }
     
-    @PostMapping("/search")
-    public String searchProduct(@RequestParam String nombre, Model model){
-      
-      log.info("Nombre del Producto: {}", nombre);
-      List<Producto> productos = productoService.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
-      model.addAttribute("productos", productos);
-      return "usuario/home";
-    }
+  @PostMapping("/search")
+  public String searchProduct(@RequestParam String nombre, Model model, HttpSession session) {
+    // Convertir el nombre del producto y el término de búsqueda a minúsculas
+    String lowerCaseNombre = nombre.toLowerCase();
+    
+    // Ver los datos del usuario, si es admin o user
+    Optional<Usuario> user= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
+    
+    List<Producto> productos = productoService.findAll().stream()
+            .filter(p -> p.getNombre().toLowerCase().contains(lowerCaseNombre))
+            .collect(Collectors.toList());
+
+    model.addAttribute("productos", productos);
+
+    if(user.get().getTipo().equals("ADMIN")){
+        //logger.info("Tipo de Usuario: {}", user.get().getTipo());
+        return "administrador/home";
+      } else {
+        //logger.info("Tipo de Usuario: {}", user.get().getTipo());
+        return"usuario/home";
+      }
+  }
+  
 }

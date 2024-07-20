@@ -51,7 +51,7 @@ public class UsuarioController {
   public String save(Usuario usuario){
     try {
       
-      logger.info("Usuarios registro: {}", usuario);
+      //logger.info("Usuarios registro: {}", usuario);
       usuario.setTipo("USER");
       usuario.setPassword(passEncode.encode(usuario.getPassword()));
  
@@ -67,21 +67,21 @@ public class UsuarioController {
     return "usuario/login";
   }
   
-  @PostMapping("/acceder")
+  @GetMapping("/acceder")
   public String acceder(Usuario usuario, HttpSession session){
-    logger.info("Accesos : {}", usuario);
+    //logger.info("Accesos : {}", usuario);
     
-    Optional<Usuario> user= usuarioService.findByEmail(usuario.getEmail());
-    logger.info("Usuario de bd: {}", user.get());
+    Optional<Usuario> user= usuarioService.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
+    //logger.info("Usuario de bd: {}", user.get());
     
     if(user.isPresent()){ //if(user.isPresent()){
       
       session.setAttribute("idusuario", user.get().getId());
       if(user.get().getTipo().equals("ADMIN")){
-        logger.info("Tipo de Usuario: {}", user.get().getTipo());
+        //logger.info("Tipo de Usuario: {}", user.get().getTipo());
         return "redirect:/administrador";
       } else {
-        logger.info("Tipo de Usuario: {}", user.get().getTipo());
+        //logger.info("Tipo de Usuario: {}", user.get().getTipo());
         return"redirect:/";
       }
     } else {
@@ -105,7 +105,7 @@ public class UsuarioController {
   
   @GetMapping("/detalle/{id}")
   public String detalleCompra(@PathVariable Integer id, HttpSession session, Model model){
-    logger.info("Id de la orden: {}", id);
+    //logger.info("Id de la orden: {}", id);
     Optional<Orden> orden= ordenService.findById(id);
     model.addAttribute("detalles", orden.get().getDetalle());
     //session
